@@ -33,9 +33,9 @@
 						.copybox input {display: inline-block;width: 265px;padding: 4px 10px;border: none;border-left: 1px solid;margin: 0 10px;}
 						.copybox label {display: inline-block;width: 60px;text-align: right;}
 						.imagebox:hover .data {display:block;}
-						.tags {display: grid;padding: 6px 6px 3px;grid-template-columns: 70% 30%;}
-						.tags input {grid-area: 1 / 1;padding: 4px 10px;}
-						.tags button {font-size: 12px;}
+						.tags {display: grid;padding: 6px 6px 3px;grid-template-columns: 100%;}
+						.tags textarea {grid-area: 1 / 1;padding: 4px 10px;height: 100px;}
+						.tags button {font-size: 12px;width: 100px;margin: 5px 0 0 0;}
 						.preview img {width: 100%;}
 
 					</style>
@@ -88,7 +88,7 @@
 												</div>
 												<div class="tags">
 													<button onclick="updatetags(this)">Update Tags</button>
-													<input value="<?php echo $json[$file]["tags"]; ?>" />
+													<textarea><?php echo $json[$file]["tags"]; ?></textarea>
 												</div>
 											</div>
 										</div>
