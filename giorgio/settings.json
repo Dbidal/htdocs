@@ -1,0 +1,9 @@
+{
+    "settings" : {
+		"domain" : "https://giorgioconstruction.ca/",
+        "sitename" : "Giorgio Construction",
+        "business_type" : "professionalService",
+        "favicon" : "https://giorgioconstruction.ca/assets/6415224.png",
+        "logo" : "https://giorgioconstruction.ca/assets/6415224.png"
+    }
+}
