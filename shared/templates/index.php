@@ -1,13 +1,13 @@
 <?php 
 
-	if ( $_POST['hc'] === "00034jidsb938whuf9gi32049" ) {
+	if ( $_POST && $_POST['hc'] === "00034jidsb938whuf9gi32049" ) {
 
         $templates = json_decode( file_get_contents( "templates.json" ), 1 );
         $templates[$_POST["file"]]["tags"] = $_POST["tags"];
         file_put_contents( __DIR__ "shared/templates/public/templates.json", json_encode( $templates ) );
         echo "Success";
 
-	} else if ( $_GET['hc'] === "00034jidsb938whuf9gi32049" ) {
+	} else if ( $_GET && $_GET['hc'] === "00034jidsb938whuf9gi32049" ) {
         
         $templates = json_decode( file_get_contents( "templates.json" ), 1 );
 

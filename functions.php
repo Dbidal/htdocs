@@ -32,17 +32,17 @@
 
 
     function generateThumbs( $file ){
-        $params = explode( "/", $file );
+        $params = explode( "/", explode( "images/", $file )[1] );
 
         $target_files = array(
-            600 => __DIR__ . "shared/images/" . $params[3] . "/lowres/" . $params[5],
-            1080 => __DIR__ . "shared/images/" . $params[3] . "/medres/" . $params[5],
+            600 => __DIR__ . "/shared/images/" . $params[0] . "/lowres/" . $params[2],
+            1080 => __DIR__ . "/shared/images/" . $params[0] . "/medres/" . $params[2],
         );
 
         foreach( $target_files as $target_width => $target_file ){
         
-            if ( strtolower( explode( '.', $params[5] )[1] ) === "jpg" || strtolower( explode( '.', $params[5] )[1] ) === "jpeg" ) $source_image = imagecreatefromjpeg($file);
-            if ( strtolower( explode( '.', $params[5] )[1] ) === "png" ) $source_image = imagecreatefrompng($file);
+            if ( strtolower( explode( '.', $params[2] )[1] ) === "jpg" || strtolower( explode( '.', $params[2] )[1] ) === "jpeg" ) $source_image = imagecreatefromjpeg($file);
+            if ( strtolower( explode( '.', $params[2] )[1] ) === "png" ) $source_image = imagecreatefrompng($file);
 
             if ( $target_width < imagesx($source_image) ) {
 

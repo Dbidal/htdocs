@@ -5,3 +5,4 @@ shared/video/*/original/
 shared/video/*/compressed/
 shared/files/*/all/
 shared/templates/*/all/
+shared/*/*/*\.json
