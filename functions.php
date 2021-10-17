@@ -40,30 +40,31 @@
         );
 
         foreach( $target_files as $target_width => $target_file ){
-        
-            if ( strtolower( explode( '.', $params[2] )[1] ) === "jpg" || strtolower( explode( '.', $params[2] )[1] ) === "jpeg" ) $source_image = imagecreatefromjpeg($file);
-            if ( strtolower( explode( '.', $params[2] )[1] ) === "png" ) $source_image = imagecreatefrompng($file);
 
-            if ( $target_width < imagesx($source_image) ) {
+            if( !file_exists( $target_file ) ) {
 
-                if( !file_exists( $target_file ) ) {
-                    $desired_height = floor(imagesy($source_image) * ($target_width / imagesx($source_image)));
-                    $virtual_image = imagecreatetruecolor($target_width, $desired_height);
-                    imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $target_width, $desired_height, imagesx($source_image), imagesy($source_image));
-                    
-                    imagejpeg( $virtual_image, $target_file );
-                }
-                
-                $target_files[$target_width] = $target_file ;
+				if ( strtolower( explode( '.', $params[2] )[1] ) === "jpg" || strtolower( explode( '.', $params[2] )[1] ) === "jpeg" ) $source_image = imagecreatefromjpeg($file);
+				if ( strtolower( explode( '.', $params[2] )[1] ) === "png" ) $source_image = imagecreatefrompng($file);
 
-            } else {
+				if ( isset( $source_image ) && $target_width < imagesx($source_image) ) {
 
-                $target_files[$target_width] = $file;
-                
-            }
+					$desired_height = floor(imagesy($source_image) * ($target_width / imagesx($source_image)));
+					$virtual_image = imagecreatetruecolor($target_width, $desired_height);
+					imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $target_width, $desired_height, imagesx($source_image), imagesy($source_image));
+					
+					imagejpeg( $virtual_image, $target_file );
+				
+				} else {
+
+					copy($file, $target_file);
+					
+				}
+			}
 
         }
 
-        return $target_files;
+		list( $width, $height ) = getimagesize( $file );
+
+        return array( $width, $height, $target_files );
 
     }

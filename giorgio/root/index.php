@@ -4,7 +4,7 @@
 		<div class="wp-block-group" style="max-width:550px" data-unique-id="eu4b0w5p6">
 			<div class="wp-block-group__inner-container">
 				<div class="wp-block-image" data-full-width="false"   >
-					<figure class="alignleft size-full is-resized"><?php new Image( "https://htdocs.dgstesting.com/shared/images/giorgio/9105738.png", "", array( "width" => 62, "height" => 63 ) ); ?></figure>
+					<figure class="alignleft size-full is-resized"><?php new Image( "https://htdocs.dgstesting.com/shared/images/giorgio/highres/9105738.png", "", array( "width" => 62, "height" => 63 ) ); ?></figure>
 				</div>
 				<p style="color:#ffffff;font-size:26px;margin-top:-10px;margin-bottom:0" class="has-text-color top"><strong>GIORGIO CONSTRUCTION&nbsp;INC.</strong></p>
 				<p style="color:#ffffff;margin-top:0;margin-bottom:0" class="has-text-color">SPECIALIZING IN WATERPROOFING</p>
@@ -27,12 +27,12 @@
 </div>
 <div class="wp-block-group has-background cover" style="background-color:#90b4c4;background-color:#90b4c4ff" data-unique-id="zekobe525">
 	<div class="wp-block-group__inner-container">
-		<figure class="wp-block-image size-large" amp-fx="parallax" data-parallax-factor="0.75" style="height: calc(100% + 25vh); margin-top: -25vh; will-change: transform; transform: translateY(2px);" data-mobileoff="true" data-amp-auto-lightbox-disable="" data-full-width="true" data-position-absolute="true"  data-parent-height="true"><?php new Image( "https://htdocs.dgstesting.com/shared/images/giorgio/6677832.jpg", "", array( "width" => 1024, "height" => 760 ) ); ?></figure>
+		<figure class="wp-block-image size-large" amp-fx="parallax" data-parallax-factor="0.75" style="height: calc(100% + 25vh); margin-top: -25vh; will-change: transform; transform: translateY(2px);" data-mobileoff="true" data-amp-auto-lightbox-disable="" data-full-width="true" data-position-absolute="true"  data-parent-height="true"><?php new Image( "https://htdocs.dgstesting.com/shared/images/giorgio/highres/6677832.jpg", "", array( "width" => 1024, "height" => 760 ) ); ?></figure>
 		<div class="wp-block-group" data-unique-id="p95x7xatx">
 			<div class="wp-block-group__inner-container">
 				<div style="height:100px" aria-hidden="true" class="wp-block-spacer"></div>
 				<div class="wp-block-image" data-full-width="false"   >
-					<figure class="aligncenter size-large is-resized"><?php new Image( "https://htdocs.dgstesting.com/shared/images/giorgio/9105738.png", "", array( "width" => 148, "height" => 150 ) ); ?></figure>
+					<figure class="aligncenter size-large is-resized"><?php new Image( "https://htdocs.dgstesting.com/shared/images/giorgio/highres/9105738.png", "", array( "width" => 148, "height" => 150 ) ); ?></figure>
 				</div>
 				<div style="padding-left:20px;padding-right:20px">
 					<div style="font-size: 48px;">
@@ -72,31 +72,31 @@
 		<figure class="wp-block-gallery columns-3 is-cropped">
 			<ul class="blocks-gallery-grid">
 				<li class="blocks-gallery-item">
-					<?php new Image( "https://htdocs.dgstesting.com/shared/images/giorgio/3995109.jpg" ); ?>
+					<?php new Image( "https://htdocs.dgstesting.com/shared/images/giorgio/highres/3995109.jpg" ); ?>
 				</li>
 				<li class="blocks-gallery-item">
-					<figure><?php new Image( "https://htdocs.dgstesting.com/shared/images/giorgio/1020937.jpg", "", array( "width" => 576, "height" => 1024 ) ); ?></figure>
+					<figure><?php new Image( "https://htdocs.dgstesting.com/shared/images/giorgio/highres/1020937.jpg", "", array( "width" => 576, "height" => 1024 ) ); ?></figure>
 				</li>
 				<li class="blocks-gallery-item">
-					<figure><?php new Image( "https://htdocs.dgstesting.com/shared/images/giorgio/4793430.jpg", "", array( "width" => 506, "height" => 423 ) ); ?></figure>
+					<figure><?php new Image( "https://htdocs.dgstesting.com/shared/images/giorgio/highres/4793430.jpg", "", array( "width" => 506, "height" => 423 ) ); ?></figure>
 				</li>
 				<li class="blocks-gallery-item">
-					<figure><?php new Image( "https://htdocs.dgstesting.com/shared/images/giorgio/6303985.jpg", "", array( "width" => 1000, "height" => 563 ) ); ?></figure>
+					<figure><?php new Image( "https://htdocs.dgstesting.com/shared/images/giorgio/highres/6303985.jpg", "", array( "width" => 1000, "height" => 563 ) ); ?></figure>
 				</li>
 				<li class="blocks-gallery-item">
-					<figure><?php new Image( "https://htdocs.dgstesting.com/shared/images/giorgio/9191844.jpg", "", array( "width" => 259, "height" => 194 ) ); ?></figure>
+					<figure><?php new Image( "https://htdocs.dgstesting.com/shared/images/giorgio/highres/9191844.jpg", "", array( "width" => 259, "height" => 194 ) ); ?></figure>
 				</li>
 				<li class="blocks-gallery-item">
-					<figure><?php new Image( "https://htdocs.dgstesting.com/shared/images/giorgio/1119617.jpg", "", array( "width" => 1000, "height" => 563 ) ); ?></figure>
+					<figure><?php new Image( "https://htdocs.dgstesting.com/shared/images/giorgio/highres/1119617.jpg", "", array( "width" => 1000, "height" => 563 ) ); ?></figure>
 				</li>
 				<li class="blocks-gallery-item">
-					<figure><?php new Image( "https://htdocs.dgstesting.com/shared/images/giorgio/1428771.jpg", "", array( "width" => 576, "height" => 1024 ) ); ?></figure>
+					<figure><?php new Image( "https://htdocs.dgstesting.com/shared/images/giorgio/highres/1428771.jpg", "", array( "width" => 576, "height" => 1024 ) ); ?></figure>
 				</li>
 				<li class="blocks-gallery-item">
-					<figure><?php new Image( "https://htdocs.dgstesting.com/shared/images/giorgio/1558305.jpg", "", array( "width" => 1000, "height" => 750 ) ); ?></figure>
+					<figure><?php new Image( "https://htdocs.dgstesting.com/shared/images/giorgio/highres/1558305.jpg", "", array( "width" => 1000, "height" => 750 ) ); ?></figure>
 				</li>
 				<li class="blocks-gallery-item">
-					<figure><?php new Image( "https://htdocs.dgstesting.com/shared/images/giorgio/2348286.jpg", "", array( "width" => 768, "height" => 1024 ) ); ?></figure>
+					<figure><?php new Image( "https://htdocs.dgstesting.com/shared/images/giorgio/highres/2348286.jpg", "", array( "width" => 768, "height" => 1024 ) ); ?></figure>
 				</li>
 			</ul>
 		</figure>

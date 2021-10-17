@@ -58,10 +58,10 @@
                         </div>
 
                         <div class="linkarea">
-                            <a href="images">Images</a>
-                            <a href="videos">Videos</a>
-                            <a href="files">Files</a>
-                            <a href="templates">Templates</a>
+                            <a href="images?hc=00034jidsb938whuf9gi32049">Images</a>
+                            <a href="videos?hc=00034jidsb938whuf9gi32049">Videos</a>
+                            <a href="files?hc=00034jidsb938whuf9gi32049">Files</a>
+                            <a href="templates?hc=00034jidsb938whuf9gi32049">Templates</a>
                         </div>
 
                         <script>
