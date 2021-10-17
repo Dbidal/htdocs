@@ -98,11 +98,13 @@
 			$this->src[0] = $src;
 			$this->alt = $alt;
 
-			if ( strpos( $src, "dgstesting.com/shared/" ) !== false ) {
-				$thumbs = generateThumbs( $src );
-				$this->src[1] = $thumbs[0];
-				$this->src[2] = $thumbs[1];
-				if ( !$this->alt ) $this->alt = "alt from media folder";
+			if ( strpos( $src, $_SERVER["SERVER_NAME"] . "/shared/" ) !== false ) {
+				list( $width, $height, $files, $genalt )  = generateThumbs( $src );
+				$this->$width = $data[ "width" ] ?: $width;
+				$this->$height = $data[ "height" ] ?: $height;
+				$this->src[1] = $files[0];
+				$this->src[2] = $files[1];
+				$this->alt = $alt ?: $genalt;
 			}
 				
 			if ( $this->data["echo"] ) $this->print();
