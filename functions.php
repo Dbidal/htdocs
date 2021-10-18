@@ -59,6 +59,9 @@
 					copy($file, $target_file);
 					
 				}
+
+				if ( $virtual_image ) imagedestroy( $virtual_image );
+				if ( $source_image ) imagedestroy( $source_image );
 			}
 
         }
