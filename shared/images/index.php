@@ -38,6 +38,7 @@
 						.tags button {font-size: 12px;width: 100px;margin: 5px 0 0 0;}
 						.preview img {width: 100%;}
 						.shuffle,.filter {display: inline-block;}.shuffle button {margin-left: 20px;cursor: pointer;}
+						.preview {position: sticky;top: 0;}
 
 					</style>
 
@@ -104,9 +105,9 @@
 						<div class="previewbox">
 							<div class="preview">
 								<img id="preview" src="" />
-							</div>
-							<div class="info">
-								<span id="previewFilename"></span>
+								<div class="info">
+									<span id="previewFilename"></span>
+								</div>
 							</div>
 						</div>
 
