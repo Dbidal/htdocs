@@ -69,7 +69,7 @@
                                 <input disabled onchange="radio(this)" type="radio" id="template" name="type" value="template"><label for="template">HTML Template</label>
                             </div>
                             <select name="dir">
-                                <?php foreach( scandir( __DIR__ . "/images/" ) as $dir ) if( $dir !== "." && $dir !== ".." && $dir !== "index.php" ) echo "<option ".("public"===$dir?"selected":"")."value='$dir'>$dir</option>"; ?>
+                                <?php foreach( scandir( __DIR__ . "/images/" ) as $dir ) if( $dir !== "." && $dir !== ".." && $dir !== "index.php" ) echo "<option ".("public"==$dir?"selected":"")." value='$dir'>$dir</option>"; ?>
                             </select>
                             <input type="file" name="file" />
                             <textarea name="template"></textarea>
