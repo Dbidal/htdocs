@@ -60,9 +60,9 @@
                             <input type="hidden" name="hc" value="<?php echo $_GET["hc"]; ?>" />
                             <div class="radio">
                                 <input onchange="radio(this)" checked type="radio" id="img" name="type" value="img"><label for="img">Image</label>
-                                <input onchange="radio(this)" type="radio" id="vid" name="type" value="vid"><label for="vid">Video</label>
-                                <input onchange="radio(this)" type="radio" id="file" name="type" value="file"><label for="file">File</label>
-                                <input onchange="radio(this)" type="radio" id="template" name="type" value="template"><label for="template">HTML Template</label>
+                                <input disabled onchange="radio(this)" type="radio" id="vid" name="type" value="vid"><label for="vid">Video</label>
+                                <input disabled onchange="radio(this)" type="radio" id="file" name="type" value="file"><label for="file">File</label>
+                                <input disabled onchange="radio(this)" type="radio" id="template" name="type" value="template"><label for="template">HTML Template</label>
                             </div>
                             <select name="dir">
                                 <?php foreach( scandir( __DIR__ . "/images/" ) as $dir ) if( $dir !== "." && $dir !== ".." && $dir !== "index.php" ) echo "<option value='$dir'>$dir</option>"; ?>
