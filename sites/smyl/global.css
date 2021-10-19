@@ -1,0 +1,20 @@
+p, li {color: #333; line-height: 1.6 !important;}
+
+h1, h2, h3, h4, h5 {color: #333; font-weight: 500;}
+
+.is-style-wide {border-color:#f4f4f4 !important;padding-top:4px !important;}
+
+.wp-block-buttons.is-content-justification-center {text-align: center;}
+
+.h .wp-block-button.aligncenter { margin-bottom:  10px; }
+.h .wp-block-button.alignleft { float: left; margin-right: 20px; }
+.h .wp-block-button.alignright { float: right; margin-left: 20px;}
+.h .wp-block-button__link { padding: 20px 70px; border: 1px solid #333; box-shadow: 0 12px 12px -12px black;}
+.h .wp-block-buttons.is-content-justification-center { text-align: center; }
+
+.h .wp-block-button a { transition: all .2s; }
+.h .wp-block-button a:hover { background: #cee2db !important; }
+
+.thin-text {font-weight:300;}
+
+#h { overflow: hidden !important; }

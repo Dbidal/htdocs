@@ -1,9 +1,11 @@
 <?php 
 	include __DIR__."/functions.php"; 
 	include __DIR__."/objects.php"; 
-	$site = new Site( explode( "/", $_SERVER['SCRIPT_NAME'] )[1] );
+	
+	$site = new Site( explode( "/", $_SERVER['SCRIPT_NAME'] )[2] );
 	$page = new Page( $site );
-	foreach( scandir( __DIR__."/$site->id/features/" ) as $file ) if( $file !== ".." && $file !== "." ) include __DIR__."/$site->id/features/".$file; 
+	foreach( scandir( __DIR__."/sites/$site->id/features/" ) as $file ) if( $file !== ".." && $file !== "." ) include __DIR__."/$site->id/features/".$file; 
+
 ?>
 
 <!doctype html>
@@ -188,12 +190,23 @@
 			foreach ( ['a','b','c','d','e'] as $key ) 
 				if ( array_key_exists( "fb_trigger_".$key, $page->data, ) && $page->data["fb_trigger_".$key] ) 
 					echo '<script id="fb_thankyou_'.$key.'"></script>';
-
 		?>
 
 		<style>
+
+			<?php
+				if ( array_key_exists( "site_colors", $site->data["settings"] ) ) {
+					$h = 1 ;
+					foreach( $site->data["settings"]["site_colors"] as $color ) { 
+						echo ':not(#_) .has-hcube-color-slug-'.$h.'-background-color{background-color:'.$color["color"].'}'; 
+						echo ':not(#_) .has-hcube-color-slug-'.$h.'-color{color:'.$color["color"].'}'; 
+						$h ++ ;
+					}
+				}
+			?>
+
 			<?php echo file_get_contents(__DIR__."/boilerplate.css"); ?>
-			<?php echo file_get_contents(__DIR__."/$site->id/global.css"); ?>
+			<?php echo file_get_contents(__DIR__."/sites/$site->id/global.css"); ?>
 		</style>
 
 		</head>
