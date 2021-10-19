@@ -21,24 +21,26 @@
 
 					<style>
 
-						.gallery {display: grid;grid-template-columns: 80% 20%;    padding-bottom: 500px;}
+						.gallery {display: grid;grid-template-columns: auto 350px;    padding-bottom: 500px;}
 						.gallery * {font-family: arial;}
 						.controls {grid-area: 1 / 1 / 1 span / 2 span;border-bottom: 1px solid;padding: 10px;}
 						.imagebox:not([hidden]) {height: 100px;display: inline-block;width: 100px;}
-						.imagebox:hover {outline: 4px solid;}
+						.imagebox[data-clicked="true"] {outline: 4px solid;}
 						.data {display: none;position: absolute;border: 1px solid;padding: 10px;width: 350px;background: white;margin: -10px 10px;box-shadow: 0 30px 100px 10px;border-radius: 4px;border-top: 6px solid;}
 						.image {width: 100px;height: 100px;overflow: hidden;}
 						.image img {height: 100px;width: 100px;object-fit:cover;object-position:center;}
-						.copybox {margin: 4px 0;font-size: 12px;text-align: right;}
-						.copybox input {display: inline-block;width: 265px;padding: 4px 10px;border: none;border-left: 1px solid;margin: 0 10px;}
-						.copybox label {display: inline-block;width: 60px;text-align: right;}
-						.imagebox:hover .data {display:block;}
+						.copybox {margin: 4px 0;font-size: 12px;text-align: right;overflow: hidden;position: relative;}
+						.copybox:before {content: '';display: block;position: absolute;background: white;height: 100%;width: 10px;left: 0;z-index: 1;}
+						.copybox input {display: inline-block;width: 2065px;padding: 4px 10px;border: none;border-left: 1px solid;margin: 0 10px;text-align: right;right: 0;position: absolute;}
+						.copybox label {display: inline-block;width: 60px;text-align: right;position: relative;background: white;padding: 5px 10px 5px 0px;margin-right: 270px;z-index: 1;font-weight: bold;border-right: 1px solid;}
 						.tags {display: grid;padding: 6px 6px 3px;grid-template-columns: 100%;}
 						.tags textarea {grid-area: 1 / 1;padding: 4px 10px;height: 100px;}
 						.tags button {font-size: 12px;width: 100px;margin: 5px 0 0 0;}
 						.preview img {width: 100%;}
 						.shuffle,.filter {display: inline-block;}.shuffle button {margin-left: 20px;cursor: pointer;}
 						.preview {position: sticky;top: 0;}
+						.copy {padding: 10px 0;}
+						.imagebox:hover:not([data-clicked="true"]) {outline:2px solid;}
 
 					</style>
 
@@ -68,9 +70,9 @@
 									list( $width, $height ) = generateThumbs( __DIR__ . "/$client/highres/" . $file );
 
 									?>
-										<div class="imagebox" data-file="<?php echo $file; ?>" data-tags="<?php echo $json[$file]["tags"]; ?>"> 
+										<div class="imagebox" data-file="<?php echo $file; ?>" data-tags="<?php echo $json[$file]["tags"]; ?>" onclick="clickimg(this)"> 
 											<div class="image">
-												<img loading="lazy" width="<?php echo $width; ?>" height="<?php echo $height; ?>" onmouseover="hover(this)" src="<?php echo "$client/lowres/$file"; ?>" />
+												<img loading="lazy" width="<?php echo $width; ?>" height="<?php echo $height; ?>" src="<?php echo "$client/lowres/$file"; ?>" />
 											</div>
 											<div class="data">
 												<div class="copy">
@@ -106,7 +108,7 @@
 							<div class="preview">
 								<img id="preview" src="" />
 								<div class="info">
-									<span id="previewFilename"></span>
+									<div id="previewdata"></div>
 								</div>
 							</div>
 						</div>
@@ -127,9 +129,12 @@
 							}
 						}
 
-                        function hover(e){
-                            document.getElementById( "preview" ).src = e.src.replace( "lowres", "highres" );
-                            document.getElementById( "previewFilename" ).innerHTML = e.parentNode.parentNode.dataset.file;
+                        function clickimg(e){
+							var imgs = document.getElementsByClassName( "imagebox" );
+							Object.keys(imgs).forEach((img) => imgs[img].dataset.clicked = "false");
+							e.dataset.clicked = "true";
+                            document.getElementById( "preview" ).src = e.getElementsByTagName("img")[0].src.replace( "lowres", "highres" );
+                            document.getElementById( "previewdata" ).innerHTML = e.getElementsByClassName("data")[0].innerHTML;
                         }
 
                         async function updatetags(e) {	
