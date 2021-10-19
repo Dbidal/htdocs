@@ -4,7 +4,10 @@
 	
 	$site = new Site( explode( "/", $_SERVER['SCRIPT_NAME'] )[2] );
 	$page = new Page( $site );
-	foreach( scandir( __DIR__."/sites/$site->id/features/" ) as $file ) if( $file !== ".." && $file !== "." ) include __DIR__."/$site->id/features/".$file; 
+
+	if ( is_dir( __DIR__."/sites/$site->id/features/" ) )
+		foreach( scandir( __DIR__."/sites/$site->id/features/" ) as $file ) 
+			if( $file !== ".." && $file !== "." ) include __DIR__."/sites/$site->id/features/".$file; 
 
 ?>
 

@@ -1,4 +1,5 @@
-<?php include '../../head.php'; ?>
+<?php include preg_replace( "/(sites).*/", "", __DIR__ ) . "head.php"; ?>
+
 <div class="wp-block-group has-background head" style="background-color:#20202f;background-color:#20202fff;position:sticky;left:0;right:0;top:0;z-index:4;bottom:auto" data-unique-id="0un6evkyx">
 	<div class="wp-block-group__inner-container">
 		<div class="wp-block-group" style="max-width:550px" data-unique-id="eu4b0w5p6">
@@ -13,7 +14,7 @@
 				@media (max-width:550px) {div.hcube-content [data-unique-id="eu4b0w5p6"]:not(#_):not(#_):not(#_):not(#_):not(#_) {max-width: 100%;}}
 				div.hcube-content [data-unique-id="eu4b0w5p6"] {margin-top: 10px;margin-bottom: 10px;}
 			</style>
-		</div>
+		</div> 
 	</div>
 	<style>
 		div.hcube-content [data-unique-id="0un6evkyx"] {width: 100%;max-width: 100%;}
@@ -276,4 +277,5 @@
 		}
 	</style>
 </div>
-<?php include '../../foot.php'; ?>
+
+<?php include preg_replace( "/(sites).*/", "", __DIR__ ) . "foot.php"; ?>
