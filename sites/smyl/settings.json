@@ -1,0 +1,44 @@
+{
+    "settings" : {
+		"domain" : "https://smyldentistry.ca/",
+        "sitename" : "Smyl Dentistry",
+        "languages" : [ "EN" ],
+        "business_type" : "Dentist",
+        "favicon" : "",
+        "logo" : "",
+        "site_colors" : [
+            { "name": "Blue", "color": "#301c61" },
+            { "name": "Off-Blue", "color": "#4e7fae" },
+            { "name": "Gray", "color": "#363839" },
+            { "name": "Dark Gray", "color": "#282a2b" },
+            { "name": "Black", "color": "#000000" },
+            { "name": "Eggshell", "color": "#f5f5f5" },
+            { "name": "Off-White", "color": "#fbfbfb" },
+            { "name": "White", "color": "#ffffff" }
+        ]
+    },
+    "places" : {
+        "Toronto" : {
+            "name" : "Smyl Dentistry",
+            "telephone" : "647.490.6052",
+            "owner" : "Grant Yiu",
+            "email" : "info@smyldentistry.ca",
+            "website" : "https://www.smyldentistry.ca/",
+            "hours" : [ "Mo 10:00-16:00", "Tu 10:00-19:00", "We 10:00-19:00", "Th 10:00-16:00", "Fr 9:00-17:00", "Sa Closed", "Su Closed" ],
+            "priceRange" : "$-$$$",
+            "streetAddress" : "608 Bloor Street",
+            "addressLocality" : "Toronto",
+            "addressLocalityPre" : "W",
+            "addressRegion" : "ON",
+            "postalCode" : "M6G 1K4",
+            "addressCountry" : "CA",
+            "latitude" : 43.6647732,
+            "longitude" : -79.4156307,
+            "social" : {
+                "google" : "https://goo.gl/maps/WNc6VsJYyP9JFUqa9",
+                "facebook" : "https://www.facebook.com/nowsmiletoronto"
+            }
+        }
+        
+    }
+}

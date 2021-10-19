@@ -30,13 +30,59 @@
 
   	  	function __construct( $id ) {
 			$this->id = $id;
-			foreach( json_decode( file_get_contents( __DIR__."/$this->id/settings.json" ))->settings as $field => $value ) 
+			foreach( json_decode( file_get_contents( __DIR__."/sites/$this->id/settings.json" ), 1 )["settings"] as $field => $value ) 
 				$this->data["settings"][$field] = $value;
 
-			//foreach( tojson file_get_contents( __DIR__ )["locations"] as location
-				//$this->data["locations"][locationid] = $location_defaults
-				//foreach( location as field => value ) 
-					//$this->data["locations"][locationid][$field] = $value;
+			foreach( json_decode( file_get_contents( __DIR__."/sites/$this->id/settings.json" ), 1 )["places"] as $locationid => $settings ) {
+				$this->data["locations"][ $locationid ] = $settings;
+			}
+		}
+
+		function place( $placeid, $field, $params = [] ) {
+
+			$color = array_key_exists( "color", $params ) ? $params["color"] : "#000";
+
+			$l = 0;
+			foreach( $this->data["locations"] as $locationid => $location ) {
+				if ( $placeid === $l || $placeid === $locationid ) {
+
+					if ( $field === "telephone" && array_key_exists( "link", $params ) ) {
+						$formatted = str_replace('(','',str_replace(')','',str_replace('-','',str_replace(' ','',$location["telephone"]))));
+						return '<a class="hcube-contact-link" data-vars-name="telephone" href="tel:'.$formatted.'">'.$location["telephone"].'</a>';
+					}
+
+
+					if ( $field === "social" ) {
+						
+						$cl = [];
+						$cl["facebook"] = ["fab fa-facebook-f", "Facebook" ];
+						$cl["twitter"] = ["fab fa-twitter", "Twitter" ];
+						$cl["pinterest"] = ["fab fa-pinterest", "Pwitter" ];
+						$cl["linkedin"] = ["fab fa-linkedin", "Linkedin" ];
+						$cl["youtube"] = ["fab fa-youtube", "Youtube" ];
+						$cl["google"] = ["fab fa-google", "Google" ];
+						$cl["instagram"] = ["fab fa-instagram", "Instagram" ];
+						$cl["yelp"] = ["fab fa-yelp", "Yelp" ];
+
+						$result = "<b class='hcube-social'>";
+						if ( array_key_exists( "social", $location ) ) foreach ( $location["social"] as $key => $value)
+							$result .= '
+								<a target="_blank" data-vars-name="Social Profile - '.$cl[$key][1].'" rel="'.$cl[$key][1].'" aria-label="'.$cl[$key][1].'" href="'.$value.'" data-amp-original-style="color:">
+									<i style="color:'.$color.'" class="'.$cl[$key][0].'"></i></a>';
+									
+						if ( array_key_exists( "customsocial", $location ) ) foreach ( $location["customsocial"] as $key => $value)
+							$result .= '
+								<a target="_blank" data-vars-name="Social Profile - '.$key.'" rel="'.$key.'" aria-label="'.$key.'" href="'.$value[0].'" data-amp-original-style="color:">
+									<i class="hc2_customsocial" style="filter:opacity(.1) drop-shadow(0 0 0 '.$color.') drop-shadow(0 0 0 '.$color.') drop-shadow(0 0 0 '.$color.') drop-shadow(0 0 0 '.$color.') drop-shadow(0 0 0 '.$color.');background-image:url('.wp_get_attachment_image_src($value[1], 'full')[0].')"></i></a>';
+
+						return $result."</b>";
+
+					}
+
+					return array_key_exists( $field, $location ) ? $location[$field] : "";
+				}
+				$l ++;
+			}
 		}
 	}
 	
@@ -71,16 +117,18 @@
 		);
 
   	  	function __construct( $site ) {
-			$this->id = "";
-			//foreach( tojson file_get_contents( __DIR__ ) as field => value ) data[$field] = $value;
+			$this->id = basename($_SERVER['PHP_SELF']) === "index.php" ? "" : basename($_SERVER['PHP_SELF']);
 
-			$this->folder = __DIR__;
-			$this->link = $site->domain . $this->folder . $this->id;
+			foreach( json_decode( file_get_contents( __DIR__."/sites/$site->id/pages.json" ), 1 )[$this->id] as $field => $value ) 
+				$this->data[$field] = $value;
+
+			$this->link = $site->data["settings"]["domain"] . $this->folder . $this->id;
 
 			//if no thumbnail, use homepages thumbnail
 
 			if ( $site->data["locations"] ) {
-				$this->data["location"]["data"] = array_key_first( $site->data["locations"] );
+				foreach( $site->data["locations"][array_key_first( $site->data["locations"] )] as $field => $value ) 
+					$this->data["location"]["data"][$field] = $value;
 				if ( $this->data["location"]["id"] && array_key_exists( $this->data["location"]["id"], $site->data["locations"] ) ) {
 					foreach( $site->data["locations"][ $this->data["location"]["id"] ] as $field => $value ) $this->data["location"]["data"][$field] = $value;
 				}
