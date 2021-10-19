@@ -9,8 +9,10 @@
         $count = count( scandir( __DIR__ . $path ) );
         $file = __DIR__ . $path . "/" . sprintf( "%05d", $count );
 
-        if ( $_POST['type'] === "template" ) 
+        if ( $_POST['type'] === "template" ) {
             file_put_contents( $file . ".html", "<style>" . file_get_contents( dirname( __DIR__, 1 ) . "/boilerplate.css" ) . "</style>" . $_POST['template'] );
+			$extension = "html";
+		}
 
         if ( $_FILES['file']['name'] ) {
             
@@ -26,7 +28,9 @@
                 generateThumbs( $file . '.' . $extension );
         }
             
-        echo "https://htdocs.dgstesting.com/" . $path . "/" . sprintf( "%05d", $count ) . '.' . $extension;
+		if ( !isset($extension) || !$extension ) die( "Bad file" );
+
+        echo "https://htdocs.dgstesting.com/shared/" . $path . "/" . sprintf( "%05d", $count ) . '.' . $extension;
 
 	} else if ( $_GET && $_GET['hc'] === "00034jidsb938whuf9gi32049" ) {
 
@@ -56,7 +60,7 @@
 
                     <div class="controlpanel">
 
-                        <form id="form" name="form" method="post" action="index.php" enctype="multipart/form-data" onsubmit="submit(event)">
+                        <form id="form" name="form" method="post" action="index.php" enctype="multipart/form-data" onsubmit="submitForm(event)">
                             <input type="hidden" name="hc" value="<?php echo $_GET["hc"]; ?>" />
                             <div class="radio">
                                 <input onchange="radio(this)" checked type="radio" id="img" name="type" value="img"><label for="img">Image</label>
@@ -89,10 +93,10 @@
                                 e.parentNode.parentNode.dataset.mode = e.id;
                             }
 
-                            async function submit(event) {	
+                            function submitForm(event) {	
                                 event.preventDefault();
                                 document.getElementById("form").dataset.loading = "true";
-                                    await fetch('', {method: "POST", body: new FormData(document.getElementById("form"))})
+                                    fetch('', {method: "POST", body: new FormData(document.getElementById("form"))})
                                     .then(response=>response.text())
                                     .then(data=>{ 
                                         document.getElementById("form").dataset.loading = "false";
