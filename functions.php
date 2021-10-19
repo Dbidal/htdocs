@@ -56,15 +56,15 @@
 						imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $target_width, $desired_height, imagesx($source_image), imagesy($source_image));
 						
 						imagejpeg( $virtual_image, $target_file );
+
+						if ( $virtual_image ) imagedestroy( $virtual_image );
+						if ( $source_image ) imagedestroy( $source_image );
 					
 					} else {
 
 						copy($file, $target_file);
 						
 					}
-
-					if ( $virtual_image ) imagedestroy( $virtual_image );
-					if ( $source_image ) imagedestroy( $source_image );
 				}
 
 			}

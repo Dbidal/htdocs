@@ -37,6 +37,7 @@
 						.tags textarea {grid-area: 1 / 1;padding: 4px 10px;height: 100px;}
 						.tags button {font-size: 12px;width: 100px;margin: 5px 0 0 0;}
 						.preview img {width: 100%;}
+						.shuffle,.filter {display: inline-block;}.shuffle button {margin-left: 20px;cursor: pointer;}
 
 					</style>
 
@@ -46,6 +47,9 @@
 							<div class="filter">
 								<label>Filter By Tag</label>
 								<input onkeyup="filter(this)">
+							</div>
+							<div class="shuffle">
+								<button onclick="shuffle(this)">Shuffle</button>
 							</div>
 						</div>
 						
@@ -114,6 +118,13 @@
 							for ( const image of document.getElementById( "grid" ).children ) 
 								image.hidden = image.dataset.tags.indexOf( e.value ) < 0;
                         }
+
+                        function shuffle(e){
+							var grid = document.getElementById('grid');
+							for (var i = grid.children.length; i >= 0; i--) {
+								grid.appendChild(grid.children[Math.random() * i | 0]);
+							}
+						}
 
                         function hover(e){
                             document.getElementById( "preview" ).src = e.src.replace( "lowres", "highres" );
