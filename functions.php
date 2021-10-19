@@ -32,42 +32,53 @@
 
 
     function generateThumbs( $file ){
-        $params = explode( "/", explode( "images/", $file )[1] );
 
-        $target_files = array(
-            600 => __DIR__ . "/shared/images/" . $params[0] . "/lowres/" . $params[2],
-            1080 => __DIR__ . "/shared/images/" . $params[0] . "/medres/" . $params[2],
-        );
+       	$params = explode( "/", explode( "images/", $file )[1] );
 
-        foreach( $target_files as $target_width => $target_file ){
+		if ( strpos( $file, $_SERVER[ "HTTP_HOST" ] ) !== false ) {
 
-            if( !file_exists( $target_file ) ) {
+			$target_files = array(
+				600 => __DIR__ . "/shared/images/" . $params[0] . "/lowres/" . $params[2],
+				1080 => __DIR__ . "/shared/images/" . $params[0] . "/medres/" . $params[2],
+			);
 
-				if ( strtolower( explode( '.', $params[2] )[1] ) === "jpg" || strtolower( explode( '.', $params[2] )[1] ) === "jpeg" ) $source_image = imagecreatefromjpeg($file);
-				if ( strtolower( explode( '.', $params[2] )[1] ) === "png" ) $source_image = imagecreatefrompng($file);
+			foreach( $target_files as $target_width => $target_file ){
 
-				if ( isset( $source_image ) && $target_width < imagesx($source_image) ) {
+				if ( !file_exists( $target_file ) ) {
 
-					$desired_height = floor(imagesy($source_image) * ($target_width / imagesx($source_image)));
-					$virtual_image = imagecreatetruecolor($target_width, $desired_height);
-					imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $target_width, $desired_height, imagesx($source_image), imagesy($source_image));
+					if ( strtolower( explode( '.', $params[2] )[1] ) === "jpg" || strtolower( explode( '.', $params[2] )[1] ) === "jpeg" ) $source_image = imagecreatefromjpeg($file);
+					if ( strtolower( explode( '.', $params[2] )[1] ) === "png" ) $source_image = imagecreatefrompng($file);
+
+					if ( isset( $source_image ) && $target_width < imagesx($source_image) ) {
+
+						$desired_height = floor(imagesy($source_image) * ($target_width / imagesx($source_image)));
+						$virtual_image = imagecreatetruecolor($target_width, $desired_height);
+						imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $target_width, $desired_height, imagesx($source_image), imagesy($source_image));
+						
+						imagejpeg( $virtual_image, $target_file );
 					
-					imagejpeg( $virtual_image, $target_file );
-				
-				} else {
+					} else {
 
-					copy($file, $target_file);
-					
+						copy($file, $target_file);
+						
+					}
+
+					if ( $virtual_image ) imagedestroy( $virtual_image );
+					if ( $source_image ) imagedestroy( $source_image );
 				}
 
-				if ( $virtual_image ) imagedestroy( $virtual_image );
-				if ( $source_image ) imagedestroy( $source_image );
 			}
+		} else {
 
-        }
+			$target_files = array(
+				600 => explode( "/shared/", $file )[0] . "/shared/images/" . $params[0] . "/lowres/" . $params[2],
+				1080 => explode( "/shared/", $file )[0] . "/shared/images/" . $params[0] . "/medres/" . $params[2],
+			);
+
+		}
 
 		list( $width, $height ) = getimagesize( $file );
 
-        return array( $width, $height, $target_files );
+        return array( $width, $height, $target_files, "" );
 
     }

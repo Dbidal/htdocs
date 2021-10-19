@@ -135,7 +135,7 @@
 	}
 
 	class Image {
-		public $src = [""];
+		public $src = ["","",""];
 		public $alt = "";
 		public $data = array( "width" => "", "height" => "", "echo" => true );
 		
@@ -143,13 +143,14 @@
 			foreach ( $data as $field => $value ) $this->data[ $field ] = $value;
 			$this->src[0] = $src;
 			$this->alt = $alt;
-
-			if ( strpos( $src, $_SERVER["SERVER_NAME"] . "/shared/" ) !== false ) {
+			
+			if ( strpos( $src, "htdocs.dgstesting.com/shared" ) !== false ) {
 				list( $width, $height, $files, $genalt )  = generateThumbs( $src );
-				$this->$width = $data[ "width" ] ?: $width;
-				$this->$height = $data[ "height" ] ?: $height;
-				$this->src[1] = $files[0];
-				$this->src[2] = $files[1];
+				
+				$this->$width = $this->data[ "width" ] ?: $width;
+				$this->$height = $this->data[ "height" ] ?: $height;
+				$this->src[1] = $files[600];
+				$this->src[2] = $files[1080];
 				$this->alt = $alt ?: $genalt;
 			}
 				
