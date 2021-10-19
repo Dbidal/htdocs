@@ -133,7 +133,7 @@
 							var imgs = document.getElementsByClassName( "imagebox" );
 							Object.keys(imgs).forEach((img) => imgs[img].dataset.clicked = "false");
 							e.dataset.clicked = "true";
-                            document.getElementById( "preview" ).src = e.getElementsByTagName("img")[0].src.replace( "lowres", "highres" );
+                            document.getElementById( "preview" ).src = e.getElementsByTagName("img")[0].src;
                             document.getElementById( "previewdata" ).innerHTML = e.getElementsByClassName("data")[0].innerHTML;
                         }
 
