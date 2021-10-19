@@ -35,7 +35,7 @@
 
        	$params = explode( "/", explode( "images/", $file )[1] );
 
-		if ( strpos( $file, $_SERVER[ "HTTP_HOST" ] ) !== false ) {
+		if ( strpos( $file, $_SERVER[ "HTTP_HOST" ] ) !== false || strpos( $file, __DIR__ ) !== false ) {
 
 			$target_files = array(
 				600 => __DIR__ . "/shared/images/" . $params[0] . "/lowres/" . $params[2],
@@ -75,8 +75,10 @@
 			1080 => explode( "/shared/", $file )[0] . "/shared/images/" . $params[0] . "/medres/" . $params[2],
 		);
 
-		list( $width, $height ) = getimagesize( $file );
+		// TODO
+			// - read width, height, alt from json file
+			// - make sure json can be read remotely
 
-        return array( $width, $height, $resulting_files, "" );
+        return array( "width", "height", $resulting_files, "alt" );
 
     }
