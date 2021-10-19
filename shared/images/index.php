@@ -21,7 +21,7 @@
 
 					<style>
 
-						.gallery {display: grid;grid-template-columns: 80% 20%;}
+						.gallery {display: grid;grid-template-columns: 80% 20%;    padding-bottom: 500px;}
 						.gallery * {font-family: arial;}
 						.controls {grid-area: 1 / 1 / 1 span / 2 span;border-bottom: 1px solid;padding: 10px;}
 						.imagebox:not([hidden]) {height: 100px;display: inline-block;width: 100px;}
