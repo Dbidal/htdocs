@@ -68,17 +68,15 @@
 				}
 
 			}
-		} else {
-
-			$target_files = array(
-				600 => explode( "/shared/", $file )[0] . "/shared/images/" . $params[0] . "/lowres/" . $params[2],
-				1080 => explode( "/shared/", $file )[0] . "/shared/images/" . $params[0] . "/medres/" . $params[2],
-			);
-
 		}
+
+		$resulting_files = array(
+			600 => explode( "/shared/", $file )[0] . "/shared/images/" . $params[0] . "/lowres/" . $params[2],
+			1080 => explode( "/shared/", $file )[0] . "/shared/images/" . $params[0] . "/medres/" . $params[2],
+		);
 
 		list( $width, $height ) = getimagesize( $file );
 
-        return array( $width, $height, $target_files, "" );
+        return array( $width, $height, $resulting_files, "" );
 
     }
