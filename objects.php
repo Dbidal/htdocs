@@ -30,12 +30,10 @@
 
   	  	function __construct( $id ) {
 			$this->id = $id;
-			foreach( json_decode( file_get_contents( __DIR__."/sites/$this->id/settings.json" ), 1 )["settings"] as $field => $value ) 
-				$this->data["settings"][$field] = $value;
-
-			foreach( json_decode( file_get_contents( __DIR__."/sites/$this->id/settings.json" ), 1 )["places"] as $locationid => $settings ) {
-				$this->data["locations"][ $locationid ] = $settings;
-			}
+			$settings = json_decode( file_get_contents( __DIR__."/sites/$this->id/settings.json" ), 1 );
+				
+			if ( array_key_exists( "settings", $settings ) ) foreach( $settings["settings"] as $field => $value ) $this->data["settings"][$field] = $value;
+			if ( array_key_exists( "places", $settings ) ) foreach( $settings["places"] as $locationid => $settings ) $this->data["locations"][ $locationid ] = $settings;
 		}
 
 		function place( $placeid, $field, $params = [] ) {
