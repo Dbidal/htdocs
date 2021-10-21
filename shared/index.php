@@ -29,7 +29,7 @@
 		$json[ sprintf( "%05d", $count ) . '.' . $extension ]["tags"] = $_POST['tags'];
 		file_put_contents( $jsonfile, json_encode( $json ) );
 
-        echo "https://htdocs.dgstesting.com/shared/" . $path . "/" . sprintf( "%05d", $count ) . '.' . $extension;
+        echo "https://htdocs.dgstesting.com/shared" . $path . "/" . sprintf( "%05d", $count ) . '.' . $extension;
 
 	} else if ( $_GET && $_GET['hc'] === "00034jidsb938whuf9gi32049" ) {
 

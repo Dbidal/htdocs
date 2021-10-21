@@ -42,6 +42,7 @@
 						.preview {position: sticky;top: 0;}
 						.copy {padding: 10px 0;}
 						.imagebox:hover:not([data-clicked="true"]) {outline:2px solid;}
+						.imagebox[data-tags]:not([data-tags=""]):before {content: '✓';display: block;position: absolute;color: white;z-index: 1;font-size: 10px;font-weight: bold;width: 16px;height: 16px;text-align: center;border-radius: 50%;background: green;}
 
 					</style>
 
