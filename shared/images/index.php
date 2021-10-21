@@ -1,8 +1,9 @@
 <?php 
 
+    include dirname( __DIR__, 2 ) . "/functions.php";
 	$client = isset( $_GET["client"] ) ? $_GET["client"] : "public";
 	$jsonfile = __DIR__ . "/$client/images.json";
-    $json = json_decode( file_get_contents( $jsonfile ), 1 );
+    $json = json_decode( file_exists( $jsonfile ) && file_get_contents( $jsonfile ), 1 ) ?: [];
 
 	if ( $_POST && $_POST['hc'] === "00034jidsb938whuf9gi32049" ) {
 
@@ -12,8 +13,6 @@
 
 	} else if ( $_GET && $_GET['hc'] === "00034jidsb938whuf9gi32049" ) {
         
-    	include  dirname( __DIR__, 2 ) . "/functions.php";
-        $templates = json_decode( file_get_contents( $jsonfile ), 1 );
 		
         ?>
             <html>
@@ -37,7 +36,9 @@
 						.tags textarea {grid-area: 1 / 1;padding: 4px 10px;height: 100px;}
 						.tags button {font-size: 12px;width: 100px;margin: 5px 0 0 0;}
 						.preview img {width: 100%;}
-						.shuffle,.filter {display: inline-block;}.shuffle button {margin-left: 20px;cursor: pointer;}
+						.shuffle,.filter ,.dir {display: inline-block;margin-left: 20px;}
+						.shuffle button {cursor: pointer;}
+						.dir {padding:2px;}
 						.preview {position: sticky;top: 0;}
 						.copy {padding: 10px 0;}
 						.imagebox:hover:not([data-clicked="true"]) {outline:2px solid;}
@@ -47,6 +48,7 @@
 					<div class="gallery">
 
 						<div class="controls">
+							<a href="../?hc=<?php echo $_GET["hc"]; ?>">↖ Back</a>
 							<div class="filter">
 								<label>Filter By Tag</label>
 								<input onkeyup="filter(this)">
@@ -54,15 +56,26 @@
 							<div class="shuffle">
 								<button onclick="shuffle(this)">Shuffle</button>
 							</div>
+                            <select class="dir" onchange="navigate(this)">
+                                <?php 
+									foreach( scandir( "." ) as $dir ) if( $dir !== "." && $dir !== ".." && $dir !== "index.php" ) 
+										echo "<option ".( ( !isset ( $_GET['client'] ) && "public" == $dir ) || $_GET['client'] == $dir ? "selected" : "" )." value='$dir'>$dir</option>"; 
+								?>
+                            </select>
 						</div>
 						
 						<div class="grid" id="grid">
 							<?php
-								$files = scandir( "$client/highres" );
+								$files = file_exists( "$client/highres" ) ? array_reverse( scandir( "$client/highres" ) ) : [];
 
-								foreach ( array_reverse( $files ) as $file ) if ( $file !== ".." && $file !== "." ) {
+								foreach ( $files as $f => $file ) if ( !is_numeric( explode( '.', $file )[0] ) ) {
+									array_push($files, $file);
+									unset($files[$f]);
+								}
 
-									if ( !array_key_exists( $file, $json ) ) {
+								foreach ( array_filter( $files ) as $file ) if ( $file !== ".." && $file !== "." ) {
+
+									if ( !array_key_exists( $file, $json ) || !array_key_exists( "tags", $json[$file] ) ) {
 										$json[$file]["tags"] = "";
 										file_put_contents( $jsonfile, json_encode( $json ) );
 									}
@@ -70,7 +83,7 @@
 									list( $width, $height ) = generateThumbs( __DIR__ . "/$client/highres/" . $file );
 
 									?>
-										<div class="imagebox" data-file="<?php echo $file; ?>" data-tags="<?php echo $json[$file]["tags"]; ?>" onclick="clickimg(this)"> 
+										<div class="imagebox" data-tags="<?php echo $json[$file]["tags"]; ?>" onclick="clickimg(this)"> 
 											<div class="image">
 												<img loading="lazy" width="<?php echo $width; ?>" height="<?php echo $height; ?>" src="<?php echo "$client/lowres/$file"; ?>" />
 											</div>
@@ -78,23 +91,23 @@
 												<div class="copy">
 													<div class="copybox">
 														<label>Dynamic</label>
-														<input value='&lt;?php new Image( "https://htdocs.dgstesting.com/shared/images/<?php echo $client; ?>/highres/<?php echo $file; ?>", "" ); ?&gt;' />
+														<input value='&lt;?php new Image( "https://htdocs.dgstesting.com/shared/images/<?php echo $client; ?>/highres/<?php echo rawurlencode($file); ?>" ); ?&gt;' />
 													</div>
 													<div class="copybox">
 														<label>Large</label>
-														<input value="https://htdocs.dgstesting.com/shared/images/<?php echo $client; ?>/highres/<?php echo $file; ?>" />
+														<input value="https://htdocs.dgstesting.com/shared/images/<?php echo $client; ?>/highres/<?php echo rawurlencode($file); ?>" />
 													</div>
 													<div class="copybox">
 														<label>Medium</label>
-														<input value="https://htdocs.dgstesting.com/shared/images/<?php echo $client; ?>/medres/<?php echo $file; ?>" />
+														<input value="https://htdocs.dgstesting.com/shared/images/<?php echo $client; ?>/medres/<?php echo rawurlencode($file); ?>" />
 													</div>
 													<div class="copybox">
 														<label>Small</label>
-														<input value="https://htdocs.dgstesting.com/shared/images/<?php echo $client; ?>/lowres/<?php echo $file; ?>" />
+														<input value="https://htdocs.dgstesting.com/shared/images/<?php echo $client; ?>/lowres/<?php echo rawurlencode($file); ?>" />
 													</div>
 												</div>
 												<div class="tags">
-													<button onclick="updatetags(this)">Update Tags</button>
+													<button data-file="<?php echo $file; ?>" onclick="updatetags(this)">Update Tags</button>
 													<textarea><?php echo $json[$file]["tags"]; ?></textarea>
 												</div>
 											</div>
@@ -109,6 +122,10 @@
 								<img id="preview" src="" />
 								<div class="info">
 									<div id="previewdata"></div>
+									<div class="results">
+										<label>Response</label>
+                            			<div id="resulta"></div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -120,6 +137,10 @@
                         function filter(e){
 							for ( const image of document.getElementById( "grid" ).children ) 
 								image.hidden = image.dataset.tags.indexOf( e.value ) < 0;
+                        }
+
+                        function navigate(e){
+							window.location.href = window.location.href.split('?')[0] + "?hc=<?php echo $_GET["hc"]; ?>&client=" + e.value;
                         }
 
                         function shuffle(e){
@@ -137,15 +158,16 @@
                             document.getElementById( "previewdata" ).innerHTML = e.getElementsByClassName("data")[0].innerHTML;
                         }
 
-                        async function updatetags(e) {	
+                        function updatetags(e) {	
                             e.dataset.loading = "true";
 							var formData = new FormData();
-							formData.append('file',  e.parentNode.parentNode.parentNode.dataset.file);
+							formData.append('file',  e.dataset.file);
 							formData.append('tags',  e.nextElementSibling.value);
 							formData.append('hc',  "<?php echo $_GET["hc"]; ?>");
-                            await fetch('', { method: 'POST', body: formData } )
+                            fetch('', { method: 'POST', body: formData } )
                                 .then(response=>response.text())
                                 .then(data=>{ 
+									document.getElementById('resulta').value = data;
                                     e.dataset.loading = "false";
                                 });
                         }

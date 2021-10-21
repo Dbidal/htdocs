@@ -10,25 +10,24 @@
         $file = __DIR__ . $path . "/" . sprintf( "%05d", $count );
 
         if ( $_POST['type'] === "template" ) {
-            file_put_contents( $file . ".html", "<style>" . file_get_contents( dirname( __DIR__, 1 ) . "/boilerplate.css" ) . "</style>" . $_POST['template'] );
+            file_put_contents( $file . ".html", $_POST['template'] );
 			$extension = "html";
 		}
 
-        if ( $_FILES['file']['name'] ) {
-            
-            $extension = pathinfo( $_FILES['file']['name'] )['extension'];
-            $allowed_extenstions = array( "img" => ["jpg","jpeg","png"], "vid" => ["mp4","mov"], "file" => ["pdf","mp3"] );
+        if ( isset( $_FILES['file'] ) && $_FILES['file']['name'] ) {
 
-            if ( !in_array( strtolower( $extension ), $allowed_extenstions[ $_POST['type'] ] ) ) 
-                die( "Bad filetype" );
-
+			$extension = checkFileType( pathinfo( $_FILES['file']['name'] )['extension'], $_POST['type'], array( "img" => ["jpg","jpeg","png"], "vid" => ["mp4","mov"], "file" => ["pdf","mp3"] ) );
             move_uploaded_file( $_FILES['file']['tmp_name'], $file . '.' . $extension );
+            if ( $_POST['type'] === "img" ) generateThumbs( $file . '.' . $extension );
 
-            if ( $_POST['type'] === "img" ) 
-                generateThumbs( $file . '.' . $extension );
         }
             
-		if ( !isset($extension) || !$extension ) die( "Bad file" );
+		if ( !isset( $extension ) || !$extension ) die( "Bad file" );
+
+		$jsonfile = __DIR__ . "/" . $folders[ $_POST['type'] ][0] . "/" . $_POST['dir'] . "/" . $folders[ $_POST['type'] ][0] . ".json";
+		$json = json_decode( file_get_contents( $jsonfile ), 1 );
+		$json[ sprintf( "%05d", $count ) . '.' . $extension ]["tags"] = $_POST['tags'];
+		file_put_contents( $jsonfile, json_encode( $json ) );
 
         echo "https://htdocs.dgstesting.com/shared/" . $path . "/" . sprintf( "%05d", $count ) . '.' . $extension;
 
@@ -54,31 +53,38 @@
                         ::file-selector-button, input[type="submit"] {background: #4875d2;border: none;padding: 7px 20px;color: white;margin: 0 10px;cursor: pointer;}
                         ::file-selector-button:hover, input[type="submit"]:hover {background: #2d56ac;}
                         [data-mode="template"] input[type="file"] {display: none;}
-                        [data-mode="template"] textarea {display: block;position: absolute;right: 10px;top: 0px;width: 310px;height: 70px;}
-                        textarea {display: none;}
+                        [data-mode="template"] textarea[name="template"] {display: block;position: absolute;right: 10px;top: 0px;width: 310px;height: 70px;}
+						textarea[name="template"] {display: none;}
+						textarea[name="tags"] {position: absolute;right: 105px;bottom: 20px;height: 29px;}
+						form > label {position: absolute;right: 280px;bottom: 15px;height: 29px;}
+						form[data-loading="true"] *,form[data-loading="done"] * {display: none !important;}
+						form[data-loading="true"]:before {content: "Uploading";text-align: center;width: 100%;display: block;margin-bottom: 15px;}
+						form[data-loading="done"]:before {content: "Complete";text-align: center;width: 100%;display: block;margin-bottom: 15px;color:#00bd00;font-weight:bold;}
                     </style>
 
                     <div class="controlpanel">
 
-                        <form id="form" name="form" method="post" action="index.php" enctype="multipart/form-data" onsubmit="submitForm(event)">
+                        <form enctype="multipart/form-data" onsubmit="submitForm(event,this)">
                             <input type="hidden" name="hc" value="<?php echo $_GET["hc"]; ?>" />
                             <div class="radio">
                                 <input onchange="radio(this)" checked type="radio" id="img" name="type" value="img"><label for="img">Image</label>
-                                <input disabled onchange="radio(this)" type="radio" id="vid" name="type" value="vid"><label for="vid">Video</label>
-                                <input disabled onchange="radio(this)" type="radio" id="file" name="type" value="file"><label for="file">File</label>
-                                <input disabled onchange="radio(this)" type="radio" id="template" name="type" value="template"><label for="template">HTML Template</label>
+                                <input onchange="radio(this)" type="radio" id="vid" name="type" value="vid"><label for="vid">Video</label>
+                                <input onchange="radio(this)" type="radio" id="file" name="type" value="file"><label for="file">File</label>
+                                <input onchange="radio(this)" type="radio" id="template" name="type" value="template"><label for="template">HTML Template</label>
                             </div>
                             <select name="dir">
                                 <?php foreach( scandir( __DIR__ . "/images/" ) as $dir ) if( $dir !== "." && $dir !== ".." && $dir !== "index.php" ) echo "<option ".("public"==$dir?"selected":"")." value='$dir'>$dir</option>"; ?>
                             </select>
                             <input type="file" name="file" />
                             <textarea name="template"></textarea>
+							<label>Tags</label>
+                            <textarea name="tags"></textarea>
                             <input type="submit" name="submit" value="Upload"/>
                         </form>
 
                         <div class="results">
                             <label>Response</label>
-                            <input placeholder="..." id="resulta">
+                            <div id="resulta"></div>
                         </div>
 
                         <div class="linkarea">
@@ -93,15 +99,14 @@
                                 e.parentNode.parentNode.dataset.mode = e.id;
                             }
 
-                            function submitForm(event) {	
+                            function submitForm(event,e) {	
                                 event.preventDefault();
-                                document.getElementById("form").dataset.loading = "true";
-                                    fetch('', {method: "POST", body: new FormData(document.getElementById("form"))})
+                               	e.dataset.loading = "true";
+                                    fetch('', {method: "POST", body: new FormData(e)})
                                     .then(response=>response.text())
                                     .then(data=>{ 
-										console.log(data);
-                                        document.getElementById("form").dataset.loading = "false";
-                                        document.getElementById("resulta").value = data; 
+                                        e.dataset.loading = "done";
+                                        document.getElementById("resulta").innerHTML = data; 
                                     });
                             }
                         </script>

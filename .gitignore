@@ -1,8 +1,1 @@
-shared/images/*/highres/
-shared/images/*/medres/
-shared/images/*/lowres/
-shared/video/*/original/
-shared/video/*/compressed/
-shared/files/*/all/
-shared/templates/*/all/
-shared/*/*/*\.json
+shared/*/*/

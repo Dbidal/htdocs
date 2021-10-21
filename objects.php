@@ -29,14 +29,17 @@
 		);
 
   	  	function __construct( $id ) {
-			$this->id = $id;
-			$settings = json_decode( file_get_contents( __DIR__."/sites/$this->id/settings.json" ), 1 );
-				
-			if ( array_key_exists( "settings", $settings ) ) foreach( $settings["settings"] as $field => $value ) $this->data["settings"][$field] = $value;
-			if ( array_key_exists( "places", $settings ) ) foreach( $settings["places"] as $locationid => $settings ) $this->data["locations"][ $locationid ] = $settings;
+			if ( $this->id = $id ){
+				$settings = json_decode( file_get_contents( __DIR__."/sites/$this->id/settings.json" ), 1 );
+					
+				if ( array_key_exists( "settings", $settings ) ) foreach( $settings["settings"] as $field => $value ) $this->data["settings"][$field] = $value;
+				if ( array_key_exists( "places", $settings ) ) foreach( $settings["places"] as $locationid => $settings ) $this->data["locations"][ $locationid ] = $settings;
+			}
 		}
 
 		function place( $placeid, $field, $params = [] ) {
+
+			if ( !$this->id ) return "⋪⋫";
 
 			$color = array_key_exists( "color", $params ) ? $params["color"] : "#000";
 
@@ -44,9 +47,13 @@
 			foreach( $this->data["locations"] as $locationid => $location ) {
 				if ( $placeid === $l || $placeid === $locationid ) {
 
-					if ( $field === "telephone" && array_key_exists( "link", $params ) ) {
+					if ( $field === "telephone" && array_key_exists( "link", $params ) && $params[ "link" ] ) {
 						$formatted = str_replace('(','',str_replace(')','',str_replace('-','',str_replace(' ','',$location["telephone"]))));
-						return '<a class="hcube-contact-link" data-vars-name="telephone" href="tel:'.$formatted.'">'.$location["telephone"].'</a>';
+						return '<a class="hcube-contact-link" href="tel:'.$formatted.'">'.$location["telephone"].'</a>';
+					}
+
+					if ( $field === "email" && array_key_exists( "link", $params ) && $params[ "link" ] ) {
+						return '<a class="hcube-contact-link" href="mailto:'.$location["email"].'">'.$location["email"].'</a>';
 					}
 
 
@@ -115,26 +122,29 @@
 		);
 
   	  	function __construct( $site ) {
-			$this->id = basename($_SERVER['PHP_SELF']) === "index.php" ? "" : basename($_SERVER['PHP_SELF']);
+			if ( $site->id ) {
+				$this->id = basename($_SERVER['PHP_SELF']) === "index.php" ? "" : basename($_SERVER['PHP_SELF']);
 
-			foreach( json_decode( file_get_contents( __DIR__."/sites/$site->id/pages.json" ), 1 )[$this->id] as $field => $value ) 
-				$this->data[$field] = $value;
+				foreach( json_decode( file_get_contents( __DIR__."/sites/$site->id/pages.json" ), 1 )[$this->id] as $field => $value ) 
+					$this->data[$field] = $value;
 
-			$this->link = $site->data["settings"]["domain"] . $this->folder . $this->id;
+				$this->link = $site->data["settings"]["domain"] . $this->folder . $this->id;
 
-			//if no thumbnail, use homepages thumbnail
+				//if no thumbnail, use homepages thumbnail
 
-			if ( $site->data["locations"] ) {
-				foreach( $site->data["locations"][array_key_first( $site->data["locations"] )] as $field => $value ) 
-					$this->data["location"]["data"][$field] = $value;
-				if ( $this->data["location"]["id"] && array_key_exists( $this->data["location"]["id"], $site->data["locations"] ) ) {
-					foreach( $site->data["locations"][ $this->data["location"]["id"] ] as $field => $value ) $this->data["location"]["data"][$field] = $value;
+				if ( $site->data["locations"] ) {
+					foreach( $site->data["locations"][array_key_first( $site->data["locations"] )] as $field => $value ) 
+						$this->data["location"]["data"][$field] = $value;
+					if ( $this->data["location"]["id"] && array_key_exists( $this->data["location"]["id"], $site->data["locations"] ) ) {
+						foreach( $site->data["locations"][ $this->data["location"]["id"] ] as $field => $value ) $this->data["location"]["data"][$field] = $value;
+					}
 				}
 			}
 		}
 	}
 
 	class Image {
+
 		public $src = ["","",""];
 		public $alt = "";
 		public $data = array( "width" => "", "height" => "", "echo" => true );
@@ -144,14 +154,19 @@
 			$this->src[0] = $src;
 			$this->alt = $alt;
 			
-			if ( strpos( $src, "htdocs.dgstesting.com/shared" ) !== false ) {
-				list( $width, $height, $files, $genalt )  = generateThumbs( $src );
+			if ( function_exists( "generateThumbs" ) && strpos( $src, "htdocs.dgstesting.com/shared" ) !== false ) {
+				list( $width, $height, $files, $genalt ) = generateThumbs( $src );
 				
 				$this->$width = $this->data[ "width" ] ?: $width;
 				$this->$height = $this->data[ "height" ] ?: $height;
 				$this->src[1] = $files[600];
 				$this->src[2] = $files[1080];
 				$this->alt = $alt ?: $genalt;
+
+			} else {
+				$this->src[1] = $this->src[0];
+				$this->src[2] = $this->src[0];
+
 			}
 				
 			if ( $this->data["echo"] ) $this->print();
