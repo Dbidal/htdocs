@@ -3,7 +3,7 @@
     include dirname( __DIR__, 2 ) . "/functions.php";
 	$client = isset( $_GET["client"] ) ? $_GET["client"] : "public";
 	$jsonfile = __DIR__ . "/$client/videos.json";
-    $json = json_decode( file_exists( $jsonfile ) && file_get_contents( $jsonfile ), 1 ) ?: [];
+    $json = file_exists( $jsonfile ) ? json_decode( file_get_contents( $jsonfile ), 1 ) : [];
 
 	if ( $_POST && $_POST['hc'] === "00034jidsb938whuf9gi32049" ) {
 
