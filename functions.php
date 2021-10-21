@@ -1,5 +1,15 @@
 <?php
 
+	if ( isset( $_SERVER['CONTENT_LENGTH'] ) && (int) $_SERVER['CONTENT_LENGTH'] > ( (int) ini_get("post_max_size") * 1024 * 1024 ) ) 
+		die( "Request too large" );
+
+
+	function checkFileType( $extension, $type, $allowed ){
+		if ( !in_array( strtolower( $extension ), $allowed[ $type ] ) ) 
+			die( "Bad filetype" );
+		return $extension;
+	}
+
 
     function sendPixel(){
 		if( isset( $_GET['token'] ) && isset( $_GET['event'] ) && isset( $_GET['id'] ) ) {
@@ -27,8 +37,6 @@
 		}
 	}
 	sendPixel();
-
-
 
 
     function generateThumbs( $file ){

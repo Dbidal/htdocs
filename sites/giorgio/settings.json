@@ -5,5 +5,11 @@
         "business_type" : "professionalService",
         "favicon" : "https://giorgioconstruction.ca/assets/6415224.png",
         "logo" : "https://giorgioconstruction.ca/assets/6415224.png"
-    }
+    },
+    "places" : {
+        "Thunder Bay" : {
+            "email" : "giorgioconstructioninc@gmail.com",
+            "telephone" : "(807) 631-4004"
+		}
+	}
 }
