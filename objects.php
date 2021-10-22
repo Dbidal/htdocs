@@ -1,8 +1,9 @@
 <?php
 
 	class Site {
+		public $root = "";
 		public $id = "";
-		public $domain = "";
+		public $pages = [];
 		public $data = array(
 			"settings" => array(
 				"business_type" => "",
@@ -31,9 +32,12 @@
   	  	function __construct( $id ) {
 			if ( $this->id = $id ){
 				$settings = json_decode( file_get_contents( __DIR__."/sites/$this->id/settings.json" ), 1 );
-					
+				$this->pages = json_decode( file_get_contents( __DIR__."/sites/$this->id/pages.json" ), 1 );
+
 				if ( array_key_exists( "settings", $settings ) ) foreach( $settings["settings"] as $field => $value ) $this->data["settings"][$field] = $value;
 				if ( array_key_exists( "places", $settings ) ) foreach( $settings["places"] as $locationid => $settings ) $this->data["locations"][ $locationid ] = $settings;
+					
+				$this->root = $_SERVER["HTTP_HOST"] == "localhost" ? "http://localhost/sites/$id/root" : $this->data["domain"];
 			}
 		}
 
@@ -116,21 +120,20 @@
 				"social" => []
 			) ),
 			"date" => array( "published" => "", "modified" => "" ),
+			"is_hidden" => "",
 			"is_service" => "",
 			"is_about" => "",
 			"no_tracking" => ""
 		);
 
-  	  	function __construct( $site ) {
+  	  	function __construct( $site, $idoverride = "" ) {
 			if ( $site->id ) {
-				$this->id = basename($_SERVER['PHP_SELF']) === "index.php" ? "" : basename($_SERVER['PHP_SELF']);
-
+				$this->id = $idoverride ?: ( basename($_SERVER['PHP_SELF']) === "index.php" ? "" : basename($_SERVER['PHP_SELF']) );
+				
 				foreach( json_decode( file_get_contents( __DIR__."/sites/$site->id/pages.json" ), 1 )[$this->id] as $field => $value ) 
 					$this->data[$field] = $value;
 
 				$this->link = $site->data["settings"]["domain"] . $this->folder . $this->id;
-
-				//if no thumbnail, use homepages thumbnail
 
 				if ( $site->data["locations"] ) {
 					foreach( $site->data["locations"][array_key_first( $site->data["locations"] )] as $field => $value ) 
@@ -140,6 +143,11 @@
 					}
 				}
 			}
+		}
+
+		function thumbnailWithFallback() {
+			//if no thumbnail, ty homepage thumbnail, then try site logo
+			return $this->data["thumbnail"];
 		}
 	}
 

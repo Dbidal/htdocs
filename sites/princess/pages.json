@@ -1,0 +1,49 @@
+{
+	"": {
+		"name": "Home",
+		"title": "Dentist in Brandon MB -- Sedation Dentist - Princess Dental Center",
+		"excerpt": "FACE LIFE WITH A SMILE FACE LIFE WITH A SMILE WELCOME DR. ERICA SEEBACH We are very excited to welcome Dr. Erica Seebach to Princess Dental. We are fortunate to find a dentist with such skill and passion for dentistry. We know she will be a great asset to Princess Dental and the community of [&hellip;]",
+		"data": { "published": "November 16, 2019 2:10 pm", "modified": "October 22, 2021 12:00 pm" },
+	},
+	"about-us-our-team.php": {
+		"name": "About Us",
+		"title": "About Us - Dentist in Brandon",
+		"excerpt": "Established in 1989 by Dr. Smith, our philosophy here has always been \"Preventative Family Dentistry\" based on establishing each patient’s individual needs in a warm and caring atmosphere.",
+		"data": { "published": "November 16, 2019 2:10 pm", "modified": "October 22, 2021 12:00 pm" },
+		"is_about": "true"
+	},
+	"amalgam-free-restorative-dentistry.php": {
+		"name": "Amalgam Guide",
+		"title": "Amalgam-Free Restorative Dentistry  -  Dentist in Brandon",
+		"thumbnail": "https://htdocs.dgstesting.com/shared/images/princess/medres/canstockphoto17278674_web.jpg",
+		"excerpt": "Princess Dental provides comprehensive mercury-free and amalgam-free dentistry. Find out if amalgam-free dentistry is for you.",
+		"data": { "published": "November 16, 2019 2:10 pm", "modified": "October 22, 2021 12:00 pm" },
+		"is_service": "true"
+	},
+	"anxiety-free-dentistry-guide.php": {
+		"name": "Anciety Guide",
+		"title": "Anxiety Free Dentistry Guide  -  Dentist in Brandon  -  Princess Dental Centre",
+		"excerpt": "Our 8-page anxiety Free Dentistry report the causes of dental anxiety and how to reduce it, as well as sedation option available to you.",
+		"data": { "published": "November 16, 2019 2:10 pm", "modified": "October 22, 2021 12:00 pm" },
+	},
+	"ask-your-dentist.php": {
+		"name": "Ask YOur Dentist",
+		"title": "Ask Your Dentist",
+		"excerpt": "Ask Your Dentist Princess Dental Ask A Dentist Form Our Dentists are happy to answer and of you're questions, send us a message!",
+		"data": { "published": "November 16, 2019 2:10 pm", "modified": "October 22, 2021 12:00 pm" },
+		"is_hidden": "true"
+	},
+	"athletic-mouthwear.php": {
+		"name": "Athletic Mouthwear",
+		"title": "Athletic Mouthwear  -  Brandon Dentist  -  Princess Dental Centre",
+		"excerpt": "Princess Dental provides custom performance athletic mouthwear to fit with comfort for those active in sports. Call to find out more.",
+		"data": { "published": "November 16, 2019 2:10 pm", "modified": "October 22, 2021 12:00 pm" },
+		"is_service": "true"
+	},
+	"blog.php": {
+		"name": "Blog",
+		"title": "Blog  -  Dentist in Brandon  -  Princess Dental Centre",
+		"excerpt": "Our blog features articles, tips, and links on the subject of oral health and local events. Feel free to read and comment on our various posts.",
+		"data": { "published": "November 16, 2019 2:10 pm", "modified": "October 22, 2021 12:00 pm" }
+	}
+}

@@ -1,14 +1,2 @@
-<IfModule mod_rewrite.c>
-
-RewriteEngine On
-
-RewriteCond %{HTTPS} off
-RewriteCond %{HTTP_HOST} !=localhost
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-
-RewriteBase /
-
 order deny,allow
 deny from all
-
-</IfModule>
