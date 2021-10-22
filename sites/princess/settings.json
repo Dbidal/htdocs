@@ -1,0 +1,48 @@
+{
+    "settings" : {
+		"domain" : "https://princessdental.com/",
+        "sitename" : "Princess Dental",
+        "business_type" : "Dentist",
+        "favicon" : "https://htdocs.dgstesting.com/shared/images/princess/highres/princessicon2.png",
+        "logo" : "https://htdocs.dgstesting.com/shared/images/princess/highres/princess-logo-500x160-web.png",
+        "site_colors" : [
+            { "name": "Princess Blue", "color": "#363839" },
+            { "name": "Princess Green", "color": "#363839" },
+            { "name": "Grey", "color": "#363839" },
+            { "name": "LT Grey", "color": "#f6f6f6" },
+            { "name": "Brown", "color": "#95581e" },
+            { "name": "null", "color": "#" },
+            { "name": "null", "color": "#" },
+            { "name": "null", "color": "#" },
+            { "name": "null", "color": "#" },
+            { "name": "null", "color": "#" },
+            { "name": "White", "color": "#ffffff" },
+            { "name": "Black", "color": "#000000" }
+        ]
+    },
+    "places" : {
+        "Brandon" : {
+			"name" : "Princess Dental Centre - Brandon",
+			"telephone" : "(204) 717-0249",
+			"owner" : "Dr. Geoff McIntosh",
+			"email" : "jerilyn@princessdental.com",
+			"website" : "princessdental.com",
+			"hours" : [ "Mo-Fr 08:00-16:00" ],
+			"priceRange" : "$-$$$",
+			"streetAddress" : "3409 Victoria Avenue Unit 7",
+			"addressLocality" : "Brandon",
+			"addressRegion" : "MB",
+			"postalCode" : "R7B 2L8",
+			"addressCountry" : "CA",
+			"latitude" : 49.844071,
+			"longitude" : -99.986836,
+			"social" : {
+				"facebook" : "https://www.facebook.com/PrincessDentalCentre/",
+				"youtube" : "https://www.youtube.com/channel/UCHACIPImxnvtwu3yy_D-8VA",
+				"google" : "https://goo.gl/maps/7JgnxsZtPiGbYSgPA",
+				"instagram" : "https://www.instagram.com/princessdentalbrandon/",
+				"yelp" : "https://www.yelp.ca/biz/princess-dental-centre-brandon?osq=princess+dental+centre"
+			}
+		}
+	}
+}

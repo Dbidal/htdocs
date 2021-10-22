@@ -1,7 +1,7 @@
 <?php 
 	include __DIR__."/functions.php"; 
 	include __DIR__."/objects.php"; 
-	
+
 	$site = new Site( explode( "/", $_SERVER['SCRIPT_NAME'] )[2] );
 	$page = new Page( $site );
 
@@ -23,20 +23,20 @@
 				foreach( $site->data["settings"]["languages"] as $language )
 					if( $language != $page->data["language"]["code"] )
 						echo '<link rel="alternate" hreflang="'.$page->data["language"]["code"].'" href="'.$page->data["language"]["urls"][ $page->data["language"]["code"] ].'" />'; 
-				
+
 		?>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<title><?php echo $page->data["title"]; ?></title>
+		<title><?php echo htmlentities( $page->data["title"] ); ?></title>
 		<link rel="Shortcut Icon" type="image/x-icon" href="<?php echo $site->data["settings"]["favicon"]; ?>" />
-		<meta property="og:title" content="<?php echo $page->data["title"]; ?>"/>
+		<meta property="og:title" content="<?php echo htmlentities( $page->data["title"] ); ?>"/>
 		<meta property="og:type" content="article"/>
 		<meta property="og:url" content="<?php echo $page->link; ?>"/>
 		<meta property="og:site_name" content="<?php echo $site->data["settings"]["sitename"]; ?>"/>
-		<meta property="og:description" content="<?php echo $page->data["excerpt"]; ?>"/>
-		<meta property="og:image" content="<?php echo $page->data["thumbnail"]; ?>"/>
+		<meta property="og:description" content="<?php echo htmlentities( $page->data["excerpt"] ); ?>"/>
+		<meta property="og:image" content="<?php echo $page->thumbnailWithFallback(); ?>"/>
 		<meta property="id" content="<?php echo $page->id; ?>"/>
 		<meta name="viewport" content="width=device-width">
-		<meta name="description" content="<?php echo $page->data["excerpt"]; ?>"/>
+		<meta name="description" content="<?php echo htmlentities( $page->data["excerpt"] ); ?>"/>
 		<link rel="canonical" href="<?php echo $page->link; ?>" />
 		<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.6.1/css/all.css">
 	
@@ -46,11 +46,11 @@
 				{
 					"@context": "http://schema.org/",
 					"@type": "Service",
-					"serviceType": "<?php echo $page->data["title"]; ?>",
+					"serviceType": "<?php echo htmlentities( $page->data["title"] ); ?>",
 					"areaServed": {"@type": "AdministrativeArea","name":"<?php echo $page->data["location"]["data"]['addressLocality']; ?>" },
-					"provider": "<?php echo $page->data["excerpt"]; ?>",
-					"description":"<?php echo $page->data["excerpt"]; ?>",
-					"image":"<?php echo $page->data["thumbnail"] ; ?>",
+					"provider": "<?php echo htmlentities( $page->data["excerpt"] ); ?>",
+					"description":"<?php echo htmlentities( $page->data["excerpt"] ); ?>",
+					"image":"<?php echo $page->thumbnailWithFallback() ; ?>",
 					"logo" : {"@type" : "ImageObject","url":"<?php echo $site->data["settings"]["favicon"]; ?>","width":"60","height":"60"},
 					"url":"<?php echo $page->link; ?>"
 				},
@@ -58,29 +58,29 @@
 				{
 					"@context": "http://schema.org/",
 					"@type": "AboutPage",
-					"description":"<?php echo $page->data["excerpt"]; ?>",
-					"image":"<?php echo $page->data["thumbnail"] ; ?>",
-					"name":"<?php echo $page->data["title"]; ?>",
+					"description":"<?php echo htmlentities( $page->data["excerpt"] ); ?>",
+					"image":"<?php echo $page->thumbnailWithFallback() ; ?>",
+					"name":"<?php echo htmlentities( $page->data["title"] ); ?>",
 					"url":"<?php echo $page->link; ?>"
 				},
 				<?php } else { ?>
 				{
 					"@context": "http://schema.org/"
 					,"@type": "NewsArticle"
-					,"name": "<?php echo $page->data["title"]; ?>"
+					,"name": "<?php echo htmlentities( $page->data["title"] ); ?>"
 					,"url":"<?php echo $page->link; ?>"
-					,"headline": "<?php echo $page->data["title"]; ?>"
-					,"description": "<?php echo $page->data["excerpt"]; ?>"
+					,"headline": "<?php echo htmlentities( $page->data["title"] ); ?>"
+					,"description": "<?php echo htmlentities( $page->data["excerpt"] ); ?>"
 					,"datePublished": "<?php echo $page->data["date"]["published"]; ?>"
 					,"dateModified": "<?php echo $page->data["date"]["modified"]; ?>"
-					,"image": "<?php echo $page->data["thumbnail"] ; ?>"
+					,"image": "<?php echo $page->thumbnailWithFallback() ; ?>"
 					,"mainEntityOfPage":"<?php echo $page->link; ?>"
 					,"author":{ "@type" : "Person","name" : "<?php echo $page->data["location"]["data"]['owner']; ?>"}
 					,"publisher": { 
 						"@type" : "Organization"
 						,"url" : "<?php echo $page->link; ?>"
 						,"logo" : {"@type" : "ImageObject","url":"<?php echo $site->data["settings"]["favicon"]; ?>","width":"60","height":"60"}
-						,"name": "<?php echo $page->data["title"]; ?>"
+						,"name": "<?php echo htmlentities( $page->data["title"] ); ?>"
 						,"contactPoint" : [{ "@type" : "ContactPoint","telephone" : "+1 <?php echo $page->data["location"]["data"]['telephone']; ?>","contactType" : "customer service"} ] }
 				},
 				<?php } ?>
@@ -95,10 +95,10 @@
 					,"@type": "<?php echo $site->data["settings"]["business_type"]; ?>"
 					,"name": "<?php echo $site->data["settings"]["sitename"]; ?>"
 					,"logo" : {"@type" : "ImageObject","url":"<?php echo $site->data["settings"]["favicon"]; ?>","width":"60","height":"60"}
-					,"image": "<?php echo $page->data["thumbnail"]; ?>"
+					,"image": "<?php echo $page->thumbnailWithFallback(); ?>"
 					,"@id": "<?php echo $site->data["settings"]["domain"]; ?>"
 					,"url": "<?php echo $site->data["settings"]["domain"]; ?>"
-					,"description": "<?php echo $page->data["excerpt"]; ?>"
+					,"description": "<?php echo htmlentities( $page->data["excerpt"] ); ?>"
 					<?php if ( $page->data["location"]["data"]['telephone'] ) { ?>,"telephone": "+1 <?php echo $page->data["location"]["data"]['telephone']; ?>"<?php } ?>
 					<?php if ( $page->data["location"]["data"]['priceRange'] ) { ?>,"priceRange": "<?php echo $page->data["location"]["data"]['priceRange']; ?>"<?php } ?>
 					
@@ -133,7 +133,7 @@
 												"@type": "<?php echo $site->data["settings"]["business_type"]; ?>", 
 												"parentOrganization": {"name": "<?php echo $site->data["settings"]["sitename"]; ?>"},
 												"name" : "<?php echo $data['name']; ?>",
-												"image": "<?php echo $page->data["thumbnail"]; ?>",
+												"image": "<?php echo $page->thumbnailWithFallback(); ?>",
 												"logo" : {"@type" : "ImageObject","url":"<?php echo $site->data["settings"]["favicon"]; ?>","width":"60","height":"60"},
 												"telephone": "+1 <?php echo $data['telephone']; ?>",
 												"priceRange": "<?php echo $data['priceRange']; ?>",
@@ -158,7 +158,7 @@
 						]
 					<?php } ?>
 					,"sameAs":[
-						"<?php $site->data["settings"]["domain"]; ?>"
+						"<?php echo $site->data["settings"]["domain"]; ?>"
 						<?php 
 							foreach( $page->data["location"]["data"]['social'] as $key => $value ) echo ',"'.$value.'"'; 
 						?>
@@ -179,8 +179,6 @@
 
 			// ADMIN TOOLS
 				// a quick way to add notes, keywords, mark as seo important, and see the seo score
-
-			}
 
 		</script>
 

@@ -10,8 +10,8 @@
         $file = __DIR__ . $path . "/" . sprintf( "%05d", $count );
 
         if ( $_POST['type'] === "template" ) {
-            file_put_contents( $file . ".html", $_POST['template'] );
-			$extension = "html";
+            file_put_contents( $file . ".php", $_POST['template'] );
+			$extension = "php";
 		}
 
         if ( isset( $_FILES['file'] ) && $_FILES['file']['name'] ) {
